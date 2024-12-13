@@ -1,0 +1,35 @@
+project:
+  name: "DeckVision"
+  version: 0.1
+  description: "An AI-powered Tarot card recognition and interpretation system."
+
+database:
+  path: "./db/features_db.duckdb"
+
+feature_extraction:
+  model: "resnet50"
+  input_size: [224, 224]
+  normalize: true
+
+paths:
+  data: "./data/"
+  images: './data/cards'
+  temp_upload: "./data/temp_upload"
+
+streamlit:
+  title: "DeckVision: Tarot Card Identifier"
+  max_file_size_mb: 10
+  allowed_file_types:
+    - "jpg"
+    - "jpeg"
+    - "png"
+  
+similarity:
+  metric: "euclidean" # Options available: euclidean, cosine
+  threshold: 0.85 # Minimum similarity score to consider a match
+
+llm:
+  model: "llama3.2"
+  provider: "ollama"
+  max_tokens: 150
+  temperature: 0.5
