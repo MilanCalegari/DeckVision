@@ -11,9 +11,11 @@ class OllamaClient:
 
     def generate_interpretation(self, card_name: str, context: str = ""):
         prompt = f"""
-        You are a Tarot expoert. Interpret the '{card_name}' in the context of a reding.
+        You are a Tarot expoert. Interpret the '{card_name}' in the context of a reading.
         Context: {context}
-        Provide a detailed but concise interpretation
+        Provide a detailed but concise interpretation. Using only a few words
+        Use only context if it's provided.
+        If there's no context, give a general description of the reading.
         """
 
 
