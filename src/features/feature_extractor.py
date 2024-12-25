@@ -23,9 +23,19 @@ class FeatureExtractor:
         img = img.unsqueeze(0)
         return img
 
-
     def extract_features(self, image_path: str):
         img = self.pre_process_image(image_path)
+
+        with torch.no_grad():
+            features = self.model(img)
+        features = features.flatten().numpy()
+        return features
+
+    def extract_features_from_array(self, img_array):
+        """Extrai features de um array numpy"""
+        img = Image.fromarray(img_array).convert("RGB")
+        img = self.transoform(img)
+        img = img.unsqueeze(0)
 
         with torch.no_grad():
             features = self.model(img)

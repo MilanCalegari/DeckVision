@@ -23,9 +23,15 @@ streamlit:
     - "jpg"
     - "jpeg"
     - "png"
+
+segmentation:
+  model: "briaai/RMBG-2.0"
+  image_size: [1024, 1024]
+  normalize_mean: [0.485, 0.456, 0.406]
+  normalize_std: [0.229, 0.224, 0.225]
   
 similarity:
-  metric: "euclidean" # Options available: euclidean, cosine
+  metric: "cosine" # Options available: euclidean, cosine
   threshold: 0.85 # Minimum similarity score to consider a match
 
 llm:

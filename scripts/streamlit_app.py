@@ -4,10 +4,12 @@ import streamlit as st
 
 from src.database.duckdb_manager import DuckDataBase
 from src.llm.ollama_client import OllamaClient
+from src.segmentation.card_segmentation import CardSegmentation
 from src.utils.config_loader import ConfigLoader
 
 config = ConfigLoader()
 llm_client = OllamaClient()
+card_segmentation = CardSegmentation()
 db = DuckDataBase()
 
 st.title("DeckVision: Tarot Reading")
@@ -25,19 +27,24 @@ if st.button("Get Tarot Reading"):
         with open(file_path, "wb") as f:
             f.write(uploaded_file.getbuffer())
 
+        cards_name = []
         # Identify the card
-        with st.spinner("Identifying the card..."):
-            most_similar_card, similarity = db.find_most_similar_card(file_path)
-
-        st.image(file_path, caption=f"Uploaded Image: {most_similar_card}", use_container_width=True)
+        with st.spinner("🔮 Summoning ancient spirits..."):
+            cards = card_segmentation.run(file_path)
+            with st.spinner("🌙 Aligning the cosmic energies..."):
+                for card in cards:
+                    with st.spinner("✨ Consulting my crystal ball and third eye..."):
+                        most_similar_card, similarity = db.find_most_similar_card(card)
+                        cards_name.append(most_similar_card)   
+        st.image(file_path, caption=f"Uploaded Image: {[name for name in cards_name]}", use_container_width=True)
 
         os.remove(file_path)
 
         # Generate interpretation
         with st.spinner("Generating Tarot reading..."):
             try:
-                interpretation = llm_client.generate_interpretation(most_similar_card, context)
-                st.success(f"The card is: **{most_similar_card}**")
+                interpretation = llm_client.generate_interpretation(cards_name, context)
+                st.success(f"The card is: **{cards_name}**")
                 st.subheader("Tarot Reading")
                 st.write(interpretation)
             except Exception as e:

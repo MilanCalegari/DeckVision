@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from typing import List, Tuple
+from typing import List, Tuple, Literal
 
 import duckdb
 import numpy as np
@@ -34,8 +34,11 @@ class DuckDataBase:
             cards.append(Card(name=card_name, feature=feature_array))
         return cards
 
-    def find_most_similar_card(self, card_img_path: str) -> Tuple[str, float]:
-        input_features = self.feature_extractor.extract_features(card_img_path)
+    def find_most_similar_card(self, card_img: Literal[str, np.ndarray]) -> Tuple[str, float]:
+        if type(card_img) == str:
+            input_features = self.feature_extractor.extract_features(card_img)
+        else:
+            input_features = self.feature_extractor.extract_features_from_array(card_img)
         
         cards = self.get_all_features()
 
@@ -47,9 +50,8 @@ class DuckDataBase:
             card_feature = card.feature
 
             distance = cosine_similarity([card_feature], [input_features]) 
-            print(f"Card: {card_name} Distance: {distance}\n")
             if distance > min_distance:
                 min_distance = distance
                 most_similar_card = card_name
-    
+        print(f"Most similar card: {most_similar_card}")    
         return most_similar_card, min_distance
