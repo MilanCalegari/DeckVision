@@ -23,6 +23,7 @@ jobs:
         env:
           HF_SPACE_NAME: ${{ secrets.HF_SPACE_NAME }}
           HF_USERNAME: ${{ secrets.HF_USERNAME }}
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
         run: |
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git config --global user.name "github-actions[bot]"
