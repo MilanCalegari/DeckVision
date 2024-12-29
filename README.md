@@ -1,3 +1,15 @@
+---
+title: DeckVision
+emoji: ⚡
+colorFrom: purple
+colorTo: blue
+sdk: docker
+pinned: false
+license: apache-2.0
+short_description: Tarot prediction using computer vision and LLM
+---
+
+Check out the configuration reference at https://huggingface.co/docs/hub/spaces-config-reference
 # DeckVision
 
 DeckVision is a project that uses artificial intelligence to identify and interpret Tarot cards from images. The system combines:
