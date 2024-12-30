@@ -24,8 +24,10 @@
 
     # Create cache directory with proper permissions
     RUN mkdir -p /.cache && \
-        chmod 777 /.cache
-
+        chmod 777 /.cache && \
+        mkdir -p /app/db && \
+        chmod 777 /app/db
+        
     # Create database directory
     RUN mkdir -p /app/db
 
