@@ -16,7 +16,7 @@ class TransformersClient(BasePromptGenerator):
         self.pipeline = pipeline(
             "text-generation",
             model="meta-llama/Llama-3.2-1B-Instruct", 
-            torch_dtype=torch.bfloat16,
+            torch_dtype=torch.float16,
             device_map="auto"
         )
 
