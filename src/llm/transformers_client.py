@@ -2,6 +2,7 @@ from typing import List
 
 import torch
 from transformers import pipeline
+from huggingface_hub import login
 
 from src.llm.base_llm import BasePromptGenerator
 from src.utils.config_loader import ConfigLoader
@@ -10,12 +11,13 @@ config = ConfigLoader()
 
 class TransformersClient(BasePromptGenerator):
     def __init__(self):
-        device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+        login(token=config.get("huggingface", "token"))
+
         self.pipeline = pipeline(
             "text-generation",
             model="meta-llama/Llama-3.2-1B-Instruct", 
             torch_dtype=torch.bfloat16,
-            device=device
+            device_map="auto"
         )
 
     def generate_input(self, cards_name: List[str], context: str = "") -> str:
