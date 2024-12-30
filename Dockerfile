@@ -44,11 +44,7 @@ RUN mkdir -p /app/data && \
 # Streamlit port
 EXPOSE 8501
 
-RUN python -c 'from huggingface_hub import login; \
-    from transformers import AutoTokenizer, AutoModelForCausalLM; \
-    login(token="'$HUGGINGFACE_TOKEN'"); \
-    AutoTokenizer.from_pretrained("meta-llama/Llama-3.2-1B-Instruct"); \
-    AutoModelForCausalLM.from_pretrained("meta-llama/Llama-3.2-1B-Instruct")'
+RUN python scripts/login_huggingface.py
 
 # Run initialization scripts and app
 CMD python scripts/create_and_write_features.py && \
