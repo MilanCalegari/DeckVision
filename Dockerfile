@@ -22,6 +22,10 @@
     # Add src directory to PYTHONPATH
     ENV PYTHONPATH="${PYTHONPATH}:/app"
 
+    # Create cache directory with proper permissions
+    RUN mkdir -p /.cache && \
+        chmod 777 /.cache
+
     # Create database directory
     RUN mkdir -p /app/db
 
