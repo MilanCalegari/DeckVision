@@ -1,7 +1,7 @@
 import json
+import os
 
 import duckdb
-import numpy as np
 from tqdm import tqdm
 
 from src.features.feature_extractor import FeatureExtractor
@@ -10,7 +10,10 @@ from src.features.feature_extractor import FeatureExtractor
 class DuckDataBase:
     def __init__(self) -> None:
         self.feature_extractor = FeatureExtractor()
-        self.db_path = "./db/features_db.duckdb"
+        self.db_path = "db/features_db.duckdb"
+
+        # Create db directory if it doesn't exist
+        os.makedirs(os.path.dirname(self.db_path), exist_ok=True)
 
         self.conn = duckdb.connect(self.db_path)
         self.conn.execute('''
