@@ -4,11 +4,18 @@ import streamlit as st
 
 from src.database.duckdb_manager import DuckDataBase
 from src.llm.ollama_client import OllamaClient
+from src.llm.transformers_client import TransformersClient
 from src.segmentation.card_segmentation import CardSegmentation
 from src.utils.config_loader import ConfigLoader
 
 config = ConfigLoader()
-llm_client = OllamaClient()
+
+# Seleciona o cliente LLM com base na configuração
+if config.get("llm", "provider") == "ollama":
+    llm_client = OllamaClient()
+else:
+    llm_client = TransformersClient()
+
 card_segmentation = CardSegmentation()
 db = DuckDataBase()
 

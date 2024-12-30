@@ -36,6 +36,6 @@ similarity:
 
 llm:
   model: "llama3.2"
-  provider: "ollama"
+  provider: "transformers" # ollama or transformers
   max_tokens: 150
   temperature: 0.5
